@@ -391,13 +391,31 @@ print(letters.count)
 letters = [] //empty the set
 print(letters.count)
 
-var yan_names: Set<String> = ["yan1", "yan2", "yan3"]
-var yan_names2: Set = ["yan1", "yan2", "yan3"]
+var yan_names: Set<String> = ["yan1", "yan2", "yan3", "yan4", "yan5"]
+var yan_names2: Set = ["yan1", "yan2", "yan3", "yan4", "yan5"]
 
 if (yan_names == yan_names2)
 {
     print ("Yes!")
+    print(yan_names.isEmpty)
+    yan_names.remove("yan2")
+    print(yan_names.count)
+    print(yan_names.contains("yan3"))
+    for names in yan_names2
+    {
+        print("\(names)")
+    }
+    
+    for names in yan_names2.sort()
+    {
+        print("\(names)")
+    }
 }
+
+
+
+
+
 
 
 
