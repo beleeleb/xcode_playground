@@ -382,6 +382,25 @@ for (index, value) in shoppingList.enumerate() {
 
 //sets
 
+var letters = Set<Character>() //init set of chars
+print(letters.count)
+
+letters.insert("b")
+print(letters.count)
+
+letters = [] //empty the set
+print(letters.count)
+
+var yan_names: Set<String> = ["yan1", "yan2", "yan3"]
+var yan_names2: Set = ["yan1", "yan2", "yan3"]
+
+if (yan_names == yan_names2)
+{
+    print ("Yes!")
+}
+
+
+
 
 
 
