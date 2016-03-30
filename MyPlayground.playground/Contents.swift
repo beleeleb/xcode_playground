@@ -412,7 +412,74 @@ if (yan_names == yan_names2)
     }
 }
 
+let oddNums: Set = [1,3,5,7,9]
+let evenNums: Set = [0,2,4,6,8]
+let singlePrimeNums: Set = [2,3,5,7]
+let twoNums: Set = [2,3]
 
+oddNums.union(evenNums).sort()
+oddNums.intersect(twoNums).sort()
+oddNums.subtract(singlePrimeNums).sort()
+oddNums.exclusiveOr(singlePrimeNums).sort()
+
+
+let houseAnimals: Set = ["🐶", "🐱"]
+let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
+let cityAnimals: Set = ["🐦", "🐭"]
+
+
+houseAnimals.isSubsetOf(farmAnimals)
+houseAnimals.isStrictSubsetOf(farmAnimals)
+
+farmAnimals.isStrictSubsetOf(farmAnimals)
+
+// true
+farmAnimals.isSupersetOf(houseAnimals)
+// true
+farmAnimals.isDisjointWith(cityAnimals)
+// true
+
+//dictionary
+var namesOfInts = [Int: String]() //human readable names of int values
+namesOfInts[16] = "sixteen" //dictionary contain 1 key-value
+namesOfInts = [:] //dictionary is empty
+var airports: [String:String] = ["TLV": "Tel Aviv", "JLM": "Jerusalem"]
+
+
+var nemalim = ["NYC": "newyork", "DUB": "dublin"]
+
+print("\(nemalim.count)" + " " + "\(nemalim.isEmpty)")
+
+airports["NYC"] = "new york city"
+
+if let output = airports.updateValue("Tel Aviv City", forKey: "TLV")
+{
+    print(output)
+    print(airports["TLV"])
+    airports["TLV"] = nil
+    if let removable = airports.removeValueForKey("JLM")
+    {
+        print(removable)
+    }
+}
+
+for (airportCode, airportName) in nemalim
+{
+    print(airportCode)
+    print(airportName)
+}
+
+for airportCode in nemalim.keys
+{
+    print(airportCode)
+}
+
+for airportName in nemalim.values
+{
+    print(airportName)
+}
+
+let airportCodesArr = [String](nemalim.keys)
 
 
 
