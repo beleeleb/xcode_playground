@@ -480,9 +480,46 @@ for airportName in nemalim.values
 }
 
 let airportCodesArr = [String](nemalim.keys)
+//control flow
+for idx in 1...4
+{
+    print(idx)
+}
 
+let base = 3
+let num = 2
+var res = 1
 
+for _ in 1...base
+{
+   res = res * num
+}
 
+print(res)
+
+let nothin = ["a": 5, "b": 6]
+
+for (str, num) in nothin{
+    print("\(str)" + "\(num)")
+}
+
+let finalsq = 25
+var board = [Int](count: finalsq + 1, repeatedValue: 0)
+board[3] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+
+var square = 0
+var dice = 0
+while square < finalsq
+{
+    dice++
+    if dice == 7 {dice = 0}
+    square += dice
+    if square < board.count
+    {
+    square += board[square]
+    }
+}
 
 
 
