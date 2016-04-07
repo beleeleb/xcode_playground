@@ -510,16 +510,27 @@ board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 
 var square = 0
 var dice = 0
-while square < finalsq
+
+/*while square < finalsq
 {
     dice++
-    if dice == 7 {dice = 0}
+    if dice == 7 {dice = 1}
     square += dice
     if square < board.count
     {
     square += board[square]
     }
-}
+}*/
+
+repeat
+{
+    square += board[square] //moved to top  (next time will be already after boundary check and thus another check is not needed. safe, since no ladder can take you higher than cell 25 - we start at 0.
+
+    dice++
+    if dice == 7 {dice = 1}
+    square += dice
+    
+} while square < finalsq
 
 
 
