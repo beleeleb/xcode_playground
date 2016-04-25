@@ -532,8 +532,208 @@ repeat
     
 } while square < finalsq
 
+let mychar: Character = "C"
+
+switch mychar
+{
+case "A","C":
+    print("\(mychar)")
+
+case "B":
+print("not \(mychar)")
+    
+default:
+    print("not found")
+}
+
+var name: String
+var value: Int = 40
+
+switch value
+{
+case 0..<20:
+    name = "to-twenty"
+case 20..<41:
+    name = "to-forty"
+default:
+    name = "something"
+}
+
+print("\(name)");
+
+var tulpee = (1,1)
+
+switch tulpee
+{
+case (0,0):
+    print("at center")
+case (_,0):
+    print("on x axis")
+case (0,_):
+    print("on y axis")
+case (1,1):
+    print("right on spot")
+    fallthrough
+case (-2...2, -2...2):
+    print("in box")
+default:
+    print("out box")
+}
+
+let point = (2,2)
+
+switch point
+{
+case (let x, 0):
+    print ("the point is on x axis: \(x)")
+case (0, let y):
+    print ("the point is on x axis: \(y)")
+case let(x,y) where x == y:
+    print("the values of x & y are same") // can't use fallthrough here since the under cases have binding values
+case let(x,y) where x == -y:
+    print("x == - y")
+case let (x,y):
+    print("point is at: (\(x),\(y))")
+}
+
+var input = "great minds think alike"
+var input2 = ""
+
+for letter in input.characters
+{
+    switch letter
+    {
+        
+    case "a", "e", "i", "u", "o", " ":
+    continue
+    
+    default:
+    input2.append(letter)
+    }
+}
+
+print(input2)
+
+let numberSymbol: Character = "y"  // Simplified Chinese for the number 3
+var possibleIntegerValue: Int?
+switch numberSymbol {
+case "1", "١", "一", "๑":
+    possibleIntegerValue = 1
+case "2", "٢", "二", "๒":
+    possibleIntegerValue = 2
+case "3", "٣", "三", "๓":
+    possibleIntegerValue = 3
+case "4", "٤", "四", "๔":
+    possibleIntegerValue = 4
+default:
+    break
+}
+
+if let integerValue = possibleIntegerValue {
+    print("The integer value of \(numberSymbol) is \(integerValue).")
+} else {
+    print("An integer value could not be found for \(numberSymbol). \(possibleIntegerValue)")
+}
+
+var number = 3
+
+var strr = "the value of \(number) is "
+
+switch number
+{
+case 2,3,5,7:
+    strr += "a prime number "
+    fallthrough
+default:
+    strr += "and of course a integer"
+}
+
+print(strr)
+
+func greet (person: [String: String])
+{
+    guard let name = person["name"] else
+    {
+        return
+    }
+    
+    print(name)
+    
+    guard let loc = person["loc"] else
+    {
+        return
+    }
+    
+    print(loc)
+}
+
+greet(["name": "yan"])
+greet(["name": "gali", "loc": "jerusalem"])
+
+if #available(iOS 9, OSX 10.10, *)
+{
+    //do API for iOS 9 & OSX 10.10
+}
+
+else
+{
+    //do old stuff
+}
+
+//functions
 
 
 
+func sayHello(Person: String ) -> String
+{
+    //let greeting = "Hello " + Person
+    return "hello " + Person// return greeting
+    
+}
+
+print(sayHello("John"))
+
+func already() -> String
+{
+    return "Hello Again"
+}
+
+func sayHello(Name: String, isGreeted: Bool) -> String
+{
+    if(isGreeted)
+    {
+        
+        return already()
+    }
+    else
+    {
+        
+    return sayHello(Name)
+    }
+}
+
+print(sayHello("Yan", isGreeted: false))
+
+func sayGoodBye(Name: String)
+{
+    print("Bye \(Name)")
+}
+
+sayGoodBye("Bob")
+
+
+func printDivisors(x:Int){
+    let sqr = sqrt(Double(x))
+    for i in 2...Int(sqr) {
+        if x % i == 0 {
+            print(i)
+            if i != (x/i) {
+                print((x/i))
+            }
+        }
+    }
+}
+
+printDivisors(100)
 
 
