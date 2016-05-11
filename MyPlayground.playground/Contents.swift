@@ -736,4 +736,144 @@ func printDivisors(x:Int){
 
 printDivisors(100)
 
+func printAndCount(strtoprint: String) -> Int
+{
+    print(strtoprint)
+    return strtoprint.characters.count
+}
+
+print(printAndCount("Hello"))
+
+func MinMax(array: [Int]) -> (min: Int, max: Int)
+{
+    var min = array[0];
+    var max = array[0];
+    
+    for i in array[1..<array.count]
+    {
+        if i < min
+        {
+            min = i;
+        }
+        
+        else if i > max
+        {
+            max = i;
+        }
+    }
+    return(min, max)
+}
+
+let bound = MinMax([8,2,6,7,10])
+print(bound.min)
+print(bound .max)
+
+
+func MinMax2(array: [Int]) -> (min: Int, max: Int)?
+{
+    if(array.isEmpty)
+    {
+        return nil
+    }
+    
+    var min = array[0];
+    var max = array[0];
+    
+    for i in array[1..<array.count]
+    {
+        if i < min
+        {
+            min = i;
+        }
+            
+        else if i > max
+        {
+            max = i;
+        }
+    }
+    return(min, max)
+}
+
+let bound2 = MinMax2([])
+
+func thunk(firstParam: Int, secondParam: Int)
+{
+    //
+}
+
+thunk(1, secondParam: 2)
+
+func thunk2(externalParam localParam: Int, externalParam localParam2: Int) -> Int //externParam is let by default //can use same external name but not recommended
+{
+    return localParam + localParam2 + 2;
+}
+
+print(thunk2(externalParam: 3, externalParam: 4))
+
+func thunk3(firstParam: Int, _ secondParam: Int, _ thirdParam: Int = 2) -> Int //impotant to keep the defaulty params at the end.
+{
+    return firstParam + secondParam + thirdParam
+}
+
+print(thunk3(1, 3))
+
+func doAvg(numbers: Double...) -> Double
+{
+    var sum: Double = 0
+    for value in numbers
+    {
+        sum += value
+    }
+    
+    return sum / Double(numbers.count)
+}
+
+print(doAvg(1,3,4,5))
+
+func swap(inout a: Int, inout b: Int)
+{
+    let temp = a
+    a = b
+    b = temp
+}
+
+var a1: Int = 9
+var b1: Int = 8
+swap(&a1, &b1)
+
+var mytulpe = (4,5)
+swap(&mytulpe.0, &mytulpe.1)
+
+print("\(mytulpe.0)" + "\(mytulpe.1)")
+
+print("\(a1)"+"\(b1)")
+
+func addtwoint(a: Int, b: Int) -> Int
+{
+    return a + b
+}
+
+
+func multitwoint(a: Int, b: Int) -> Int
+{
+    return a * b
+}
+var variablefunc: (Int, Int) -> Int = addtwoint
+print(variablefunc(4,5))
+
+variablefunc = multitwoint
+
+print(variablefunc(4,5))
+
+let anotherfunc = swap
+
+func doSwap(mythunk: (inout Int, inout Int)->(), inout _ a: Int, inout _ b: Int)
+{
+    mythunk(&a, &b)
+}
+
+doSwap(anotherfunc, &a1, &b1)
+
+print("\(a1)"+"\(b1)")
+
 
