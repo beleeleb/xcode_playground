@@ -846,7 +846,7 @@ swap(&mytulpe.0, &mytulpe.1)
 
 print("\(mytulpe.0)" + "\(mytulpe.1)")
 
-print("\(a1)"+"\(b1)")
+print("\(a1) "+"\(b1)")
 
 func addtwoint(a: Int, b: Int) -> Int
 {
@@ -867,13 +867,78 @@ print(variablefunc(4,5))
 
 let anotherfunc = swap
 
-func doSwap(mythunk: (inout Int, inout Int)->(), inout _ a: Int, inout _ b: Int)
+func doSwap(mythunk: (inout Int, inout Int)->(), inout _ a: Int, inout _ b: Int) //function types as parameter types, like pointer to a function
 {
     mythunk(&a, &b)
 }
 
 doSwap(anotherfunc, &a1, &b1)
 
-print("\(a1)"+"\(b1)")
+print("\(a1) "+"\(b1)")
+
+//function types as return types
+
+func setForw(input: Int) -> Int
+{
+    return input + 1
+}
+
+func setBack(input: Int) -> Int
+{
+    return input - 1
+}
+
+func chooseStep(goBack: Bool) -> (Int) -> Int
+{
+  return  goBack ? setBack : setForw
+}
+
+let answer = chooseStep(true) //set answer as pointer to the selected function
+print(answer(3))
+
+print(chooseStep(true)(3)) //another way to activate the selected function
+
+var value1 = 4
+while(value1 != 0)
+{
+    print("\(value1),")
+    value1 = answer(value1)
+}
+
+func pickStep(IsBack: Bool) -> (Int) -> Int
+{
+    func goForw(input: Int) -> Int { return input + 1 } //nested
+    
+    func goBack(input: Int) -> Int { return input - 1 }
+    return IsBack ? goBack : goForw
+}
+var myval = 3
+var myfunc = pickStep (myval > 0)
+while (myval != 0)
+{
+    print("*" + "\(myval)")
+    myval = myfunc(myval)
+}
+
+//closures
+
+let names1 = ["alex", "zipi", "moshe", "beni", "cargo"]
+
+func backwards (_ s1: String, _ s2: String) -> Bool
+{
+    return  s1 > s2
+}
+
+var sortedArr = names1.sort(backwards) //sorted(isOrderedBefore: backwards in swift3
+print(sortedArr)
+
+//closure version
+
+var sortedArrClosure = names1.sort({(s1: String, s2: String) -> Bool in //in swift 3 change to sorted andd add isordered..
+return s1 > s2
+}
+)
+
+print(sortedArrClosure)
 
 
