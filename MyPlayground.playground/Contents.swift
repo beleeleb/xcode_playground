@@ -941,4 +941,37 @@ return s1 > s2
 
 print(sortedArrClosure)
 
+let names2 = ["box", "yan", "gox", "fox", "apple"] 
+
+var sorted_names = names2.sorted(isOrderedBefore: {s1, s2 in return s1 < s2}) //infered from closure that it's string,string -> bool, we can also omit the return.
+
+print(sorted_names)
+
+var sorted_2_names = names.sorted(isOrderedBefore: { $0 < $1 } ) //$0 & $1 replace s1 and s2
+
+print(sorted_2_names)
+
+var sorted_3_names = names.sorted(isOrderedBefore:  <  ) //short way, since it's implicit
+
+print(sorted_3_names)
+
+func someFunctionThatTakesAClosure(closure: () -> Void) {
+    // function body goes here
+    //this is the implemenation of the function that takes a closure as a parameter
+}
+
+//call to the function without a trailing closure:
+
+someFunctionThatTakesAClosure(closure: {
+    
+    //closure body
+})
+
+//call with a trailing closure:
+
+someFunctionThatTakesAClosure()
+{
+    //closure body
+}
+
 
