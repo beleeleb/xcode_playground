@@ -160,9 +160,9 @@ var val5: Int8 = 100
 let nonvar7: Int8 = val3 &+ val5 //& added to opt in overflow
 9 % 4
 -10 % 2
-var newval = 8 % 2.5
-newval++
-++newval
+//no longer availabe: var newval = 8 % 2.5
+var newval = 8.truncatingRemainder(2.5)
+newval += 1
 var yyy3: Int = 0xC
 var newyyy3 = -yyy3 //unary minus can't be applied for string
 
@@ -229,7 +229,8 @@ print(catCharacters , catString, catCharacters[2])
 
 let strstr = "Hello, world!"
 
-let index = strstr.startIndex.advancedBy(4)
+//no longer availabe: let index = strstr.startIndex.advancedBy(4)
+let index = strstr.index(strstr.startIndex , offsetBy: 4)
 print(strstr.startIndex)
 print(strstr[index]) // returns Character 'o'
 print(strstr)
@@ -260,11 +261,12 @@ print("chars: \(cafe.characters.count)")
 let greeting = "Guten Tag!"
 print(greeting[greeting.startIndex])
 
-print(greeting[greeting.endIndex.predecessor()])
+//no longer: print(greeting[greeting.endIndex.predecessor()])
+print(greeting[greeting.index(before: greeting.endIndex)])
+//no longer print(greeting[greeting.startIndex.successor()])
+print(greeting[greeting.index(after:greeting.startIndex)])
 
-print(greeting[greeting.startIndex.successor()])
-
-let idx = greeting.startIndex.advancedBy(7)
+let idx = greeting.index(greeting.startIndex, offsetBy: 7)
 print("\(greeting[idx])" + "\t" + greeting)
 
 for idx in greeting.characters.indices
