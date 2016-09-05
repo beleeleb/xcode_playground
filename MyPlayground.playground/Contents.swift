@@ -975,3 +975,32 @@ someFunctionThatTakesAClosure()
 }
 
 
+let my_names = ["fff", "aaa", "bbb"]
+
+var reverse = my_names.sorted() { $0 > $1 }
+
+print(reverse)
+//just to compare
+//var sorted_3_names = names.sorted(isOrderedBefore:  <  ) //short way, since it's implicit
+//var sorted_2_names = names.sorted(isOrderedBefore: { $0 < $1 } ) //$0 & $1 replace s1 and s2
+reverse = my_names.sorted{ $0 < $1 }
+
+print(reverse)
+
+//how to use map and trailing closure
+
+let digitMap = [0: "zero", 1: "one", 2: "two", 3: "three"]
+
+let nums = [10, 11, 32]
+
+let string_nums = nums.map { number -> String in
+    var output = ""
+    
+    var temp_number = number
+    
+    while temp_number > 0
+    {
+        output = digitMap[temp_number%10]! + output 
+    }
+    return output
+}
