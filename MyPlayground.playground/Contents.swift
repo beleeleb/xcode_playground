@@ -161,7 +161,7 @@ let nonvar7: Int8 = val3 &+ val5 //& added to opt in overflow
 9 % 4
 -10 % 2
 //no longer availabe: var newval = 8 % 2.5
-var newval = 8.truncatingRemainder(2.5)
+var newval = 8.truncatingRemainder(dividingBy: 2.5)
 newval += 1
 var yyy3: Int = 0xC
 var newyyy3 = -yyy3 //unary minus can't be applied for string
@@ -274,15 +274,15 @@ for idx in greeting.characters.indices
     print("\(greeting[idx])", terminator: "-") //default terminator is \n
 }
 
-cafe.insert("?", atIndex: cafe.endIndex) //insert char to str
+cafe.insert("?", at: cafe.endIndex) //insert char to str, at instead of atIndex
 print("\n" + cafe)
 
-cafe.insertContentsOf(" yes, please".characters, at: cafe.endIndex)
+cafe.insert(contentsOf: " yes, please".characters, at: cafe.endIndex)
 print(cafe)
-cafe.removeAtIndex(cafe.endIndex.predecessor())
+cafe.remove(at: cafe.index(before: cafe.endIndex)) //instead removeAtIndex
 print(cafe)
-var range = cafe.endIndex.advancedBy(-3)..<cafe.endIndex
-cafe.removeRange(range)
+var range = cafe.index(cafe.endIndex, offsetBy: -3)..<cafe.endIndex
+cafe.removeSubrange(range)
 print(cafe)
 
 let latinCapitalLetterA: Character = "\u{41}"
@@ -339,7 +339,7 @@ someInts = []
 print("someInts is of type [Int] with \(someInts.count) items.")
 
 someInts.append(5)
-var threeInts = [Int](count: 3, repeatedValue: 2)
+var threeInts = [Int](repeating: 2, count: 3) //instead var threeInts = [Int](count: 3, repeatedValue: 2) in Swift 2
 
 var fourInts = threeInts + someInts
 print("someInts is of type [Int] with \(fourInts.count) items.")
@@ -367,9 +367,9 @@ print(shoppingList[0])
 
 shoppingList[4...6] = ["Bananas", "Apples"]
 
-shoppingList.insert("Maple Syrup", atIndex: 0)
+shoppingList.insert("Maple Syrup", at: 0)
 
-let mapleSyrup = shoppingList.removeAtIndex(0)
+let mapleSyrup = shoppingList.remove(at: 0)
 firstItem = shoppingList[0]
 
 print(firstItem)
@@ -378,7 +378,7 @@ for item in shoppingList {
 }
 let apples = shoppingList.removeLast()
 
-for (index, value) in shoppingList.enumerate() {
+for (index, value) in shoppingList.enumerated() {
     print("Item \(index + 1): \(value)")
 }
 
@@ -408,21 +408,21 @@ if (yan_names == yan_names2)
         print("\(names)")
     }
     
-    for names in yan_names2.sort()
+    for names in yan_names2.sorted()
     {
         print("\(names)")
     }
 }
 
-let oddNums: Set = [1,3,5,7,9]
+let oddNums: Set = [1,3,5,7,9] //was let
 let evenNums: Set = [0,2,4,6,8]
 let singlePrimeNums: Set = [2,3,5,7]
 let twoNums: Set = [2,3]
 
-oddNums.union(evenNums).sort()
-oddNums.intersect(twoNums).sort()
-oddNums.subtract(singlePrimeNums).sort()
-oddNums.exclusiveOr(singlePrimeNums).sort()
+oddNums.union(evenNums).sorted()
+oddNums.intersection(twoNums).sorted()
+oddNums.subtracting(singlePrimeNums).sorted() //subtracting instead subtract
+oddNums.symmetricDifference(singlePrimeNums).sorted() //instead of exclusiveOr
 
 
 let houseAnimals: Set = ["🐶", "🐱"]
@@ -430,15 +430,15 @@ let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
 let cityAnimals: Set = ["🐦", "🐭"]
 
 
-houseAnimals.isSubsetOf(farmAnimals)
-houseAnimals.isStrictSubsetOf(farmAnimals)
+houseAnimals.isSubset(of: farmAnimals)
+houseAnimals.isStrictSubset(of: farmAnimals)
 
-farmAnimals.isStrictSubsetOf(farmAnimals)
+farmAnimals.isStrictSubset(of: farmAnimals)
 
 // true
-farmAnimals.isSupersetOf(houseAnimals)
+farmAnimals.isSuperset(of: houseAnimals)
 // true
-farmAnimals.isDisjointWith(cityAnimals)
+farmAnimals.isDisjoint(with: cityAnimals)
 // true
 
 //dictionary
@@ -459,7 +459,7 @@ if let output = airports.updateValue("Tel Aviv City", forKey: "TLV")
     print(output)
     print(airports["TLV"])
     airports["TLV"] = nil
-    if let removable = airports.removeValueForKey("JLM")
+    if let removable = airports.removeValue(forKey: "JLM")
     {
         print(removable)
     }
@@ -506,7 +506,7 @@ for (str, num) in nothin{
 }
 
 let finalsq = 25
-var board = [Int](count: finalsq + 1, repeatedValue: 0)
+var board = [Int](repeating: 0, count: finalsq + 1)
 board[3] = +08; board[06] = +11; board[09] = +09; board[10] = +02
 board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 
@@ -528,7 +528,7 @@ repeat
 {
     square += board[square] //moved to top  (next time will be already after boundary check and thus another check is not needed. safe, since no ladder can take you higher than cell 25 - we start at 0.
 
-    dice++
+    dice += 1
     if dice == 7 {dice = 1}
     square += dice
     
@@ -669,8 +669,8 @@ func greet (person: [String: String])
     print(loc)
 }
 
-greet(["name": "yan"])
-greet(["name": "gali", "loc": "jerusalem"])
+greet(person: ["name": "yan"])
+greet(person: ["name": "gali", "loc": "jerusalem"])
 
 if #available(iOS 9, OSX 10.10, *)
 {
@@ -693,7 +693,7 @@ func sayHello(Person: String ) -> String
     
 }
 
-print(sayHello("John"))
+print(sayHello(Person: "John"))
 
 func already() -> String
 {
@@ -710,18 +710,18 @@ func sayHello(Name: String, isGreeted: Bool) -> String
     else
     {
         
-    return sayHello(Name)
+    return sayHello(Person: Name)
     }
 }
 
-print(sayHello("Yan", isGreeted: false))
+print(sayHello(Name: "Yan", isGreeted: false))
 
 func sayGoodBye(Name: String)
 {
     print("Bye \(Name)")
 }
 
-sayGoodBye("Bob")
+sayGoodBye(Name: "Bob")
 
 
 func printDivisors(x:Int){
@@ -736,7 +736,7 @@ func printDivisors(x:Int){
     }
 }
 
-printDivisors(100)
+printDivisors(x: 100)
 
 func printAndCount(strtoprint: String) -> Int
 {
@@ -744,7 +744,7 @@ func printAndCount(strtoprint: String) -> Int
     return strtoprint.characters.count
 }
 
-print(printAndCount("Hello"))
+print(printAndCount(strtoprint: "Hello"))
 
 func MinMax(array: [Int]) -> (min: Int, max: Int)
 {
@@ -766,7 +766,7 @@ func MinMax(array: [Int]) -> (min: Int, max: Int)
     return(min, max)
 }
 
-let bound = MinMax([8,2,6,7,10])
+let bound = MinMax(array: [8,2,6,7,10])
 print(bound.min)
 print(bound .max)
 
@@ -796,14 +796,18 @@ func MinMax2(array: [Int]) -> (min: Int, max: Int)?
     return(min, max)
 }
 
-let bound2 = MinMax2([])
+let bound2 = MinMax2(array: []) //MinMax2 handles empty array and returns nil
+
+if (bound2 != nil) {
+    print(bound2?.min)
+}
 
 func thunk(firstParam: Int, secondParam: Int)
 {
     //
 }
 
-thunk(1, secondParam: 2)
+thunk(firstParam: 1, secondParam: 2)
 
 func thunk2(externalParam localParam: Int, externalParam localParam2: Int) -> Int //externParam is let by default //can use same external name but not recommended
 {
@@ -817,7 +821,7 @@ func thunk3(firstParam: Int, _ secondParam: Int, _ thirdParam: Int = 2) -> Int /
     return firstParam + secondParam + thirdParam
 }
 
-print(thunk3(1, 3))
+print(thunk3(firstParam: 1, 3))
 
 func doAvg(numbers: Double...) -> Double
 {
@@ -830,9 +834,9 @@ func doAvg(numbers: Double...) -> Double
     return sum / Double(numbers.count)
 }
 
-print(doAvg(1,3,4,5))
+print(doAvg(numbers: 1,3,4,5))
 
-func swap(inout a: Int, inout b: Int)
+func swap( a: inout Int, b: inout Int)
 {
     let temp = a
     a = b
@@ -869,12 +873,12 @@ print(variablefunc(4,5))
 
 let anotherfunc = swap
 
-func doSwap(mythunk: (inout Int, inout Int)->(), inout _ a: Int, inout _ b: Int) //function types as parameter types, like pointer to a function
+func doSwap(mythunk: (inout Int, inout Int)->(), _ a: inout Int, _ b: inout Int) //function types as parameter types, like pointer to a function
 {
     mythunk(&a, &b)
 }
 
-doSwap(anotherfunc, &a1, &b1)
+doSwap(mythunk: anotherfunc, &a1, &b1)
 
 print("\(a1) "+"\(b1)")
 
@@ -895,10 +899,10 @@ func chooseStep(goBack: Bool) -> (Int) -> Int
   return  goBack ? setBack : setForw
 }
 
-let answer = chooseStep(true) //set answer as pointer to the selected function
+let answer = chooseStep(goBack: true) //set answer as pointer to the selected function
 print(answer(3))
 
-print(chooseStep(true)(3)) //another way to activate the selected function
+print(chooseStep(goBack: true)(3)) //another way to activate the selected function
 
 var value1 = 4
 while(value1 != 0)
@@ -915,7 +919,7 @@ func pickStep(IsBack: Bool) -> (Int) -> Int
     return IsBack ? goBack : goForw
 }
 var myval = 3
-var myfunc = pickStep (myval > 0)
+var myfunc = pickStep (IsBack: myval > 0)
 while (myval != 0)
 {
     print("*" + "\(myval)")
@@ -931,13 +935,12 @@ func backwards (_ s1: String, _ s2: String) -> Bool
     return  s1 > s2
 }
 
-var sortedArr = names1.sort(backwards) //sorted(isOrderedBefore: backwards in swift3
+var sortedArr = names1.sorted(isOrderedBefore: backwards) //sorted(isOrderedBefore: backwards in swift3 instead sort(backwards)
 print(sortedArr)
 
 //closure version
-
-var sortedArrClosure = names1.sort({(s1: String, s2: String) -> Bool in //in swift 3 change to sorted andd add isordered..
-return s1 > s2
+//in swift 3 change to sorted and add isordered..
+var sortedArrClosure = names1.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2
 }
 )
 
@@ -949,11 +952,11 @@ var sorted_names = names2.sorted(isOrderedBefore: {s1, s2 in return s1 < s2}) //
 
 print(sorted_names)
 
-var sorted_2_names = names.sorted(isOrderedBefore: { $0 < $1 } ) //$0 & $1 replace s1 and s2
+var sorted_2_names = names.sorted(by: { $0 < $1 } ) //$0 & $1 replace s1 and s2
 
 print(sorted_2_names)
 
-var sorted_3_names = names.sorted(isOrderedBefore:  <  ) //short way, since it's implicit
+var sorted_3_names = names.sorted(by:<) //short way, since it's implicit
 
 print(sorted_3_names)
 
