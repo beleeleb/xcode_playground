@@ -939,8 +939,9 @@ var sortedArr = names1.sorted(isOrderedBefore: backwards) //sorted(isOrderedBefo
 print(sortedArr)
 
 //closure version
+
 //in swift 3 change to sorted and add isordered..
-var sortedArrClosure = names1.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2
+var sortedArrClosure = names1.sorted(isOrderedBefore: { (s1: String, s2: String) -> Bool in return s1 > s2
 }
 )
 
@@ -952,11 +953,13 @@ var sorted_names = names2.sorted(isOrderedBefore: {s1, s2 in return s1 < s2}) //
 
 print(sorted_names)
 
-var sorted_2_names = names.sorted(by: { $0 < $1 } ) //$0 & $1 replace s1 and s2
+let descendingStudents = names2.sorted(isOrderedBefore: >) //will be changed to by: > in the near future
+
+var sorted_2_names = names2.sorted(isOrderedBefore: { $0 < $1 } ) //$0 & $1 replace s1 and s2
 
 print(sorted_2_names)
 
-var sorted_3_names = names.sorted(by:<) //short way, since it's implicit
+var sorted_3_names = names1.sorted(isOrderedBefore:<) //short way, since it's implicit
 
 print(sorted_3_names)
 
