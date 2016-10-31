@@ -1,4 +1,5 @@
-//: Playground - noun: a place where people can play
+#if false
+    //: Playground - noun: a place where people can play
 //The Basics
 import UIKit
 let maxNum2: Int
@@ -98,7 +99,7 @@ if let actualNumber = possibleNumber {
     print("\'\(possibleNumber)\' could not be converted to an integer")
 }
 
-if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
+if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber {
     print("\(firstNumber) < \(secondNumber)")
 }
 // prints "4 < 42"
@@ -989,8 +990,8 @@ var reverse = my_names.sorted() { $0 > $1 }
 
 print(reverse)
 //just to compare
-//var sorted_3_names = names.sorted(isOrderedBefore:  <  ) //short way, since it's implicit
-//var sorted_2_names = names.sorted(isOrderedBefore: { $0 < $1 } ) //$0 & $1 replace s1 and s2
+var sorted1 = my_names.sorted(isOrderedBefore:  <  ) //short way, since it's implicit
+var sorted2 = my_names.sorted(isOrderedBefore: { $0 < $1 } ) //$0 & $1 replace s1 and s2
 reverse = my_names.sorted{ $0 < $1 }
 
 print(reverse)
@@ -1001,14 +1002,141 @@ let digitMap = [0: "zero", 1: "one", 2: "two", 3: "three"]
 
 let nums = [10, 11, 32]
 
-let string_nums = nums.map { number -> String in
+let string_nums = nums.map { (number) -> String in
     var output = ""
     
-    var temp_number = number
-    
-    while temp_number > 0
+    var  tmp_number = number
+    repeat
     {
-        output = digitMap[temp_number%10]! + output 
+            //print(tmp_number%10)
+            output = digitMap[tmp_number%10]! + output //The call to digitNames dictionary’s subscript is followed by (!), because dictionary subscripts return an optional value to indicate that the dictionary lookup can fail if the key does not exist.
+        
+            tmp_number /= 10
     }
+    while tmp_number > 0
+   
     return output
 }
+
+print(string_nums)
+
+//one way
+
+var values = [2.0,4.0,5.0,7.0]
+var squares: [Double] = []
+for value in values {
+    squares.append(value*value)
+}
+print(squares)
+
+//another way - the use of map
+values = [2.0,4.0,5.0,7.0]
+squares = values.map {$0 * $0}
+print(squares)
+#endif
+
+//Capturing Values
+
+func makeInc (toInc amount: Int) -> () -> Int
+{
+    var value = 0
+    func inc() -> Int
+        {
+            value += amount
+            return value
+    }
+    
+    inc()
+    return inc      //After capturing these values, inc is returned by makeInc as a closure that increments value by amount each time it is called.
+    
+
+}
+ 
+let mynumb = makeInc(toInc: 8)
+ 
+mynumb()
+mynumb()
+
+//Closures Are Reference Types
+
+let anotherConst = mynumb
+anotherConst() //the fact that is const doesn't change the fact the inner closure var isn't const, and that's because it is by reference
+
+//Escaping Closures
+
+//• Closures are functions without names. They can be assigned to variables and passed as parameters to functions.
+//• Closures have shorthand syntax that makes them a lot easier to use than other functions.
+//• A closure can capture the variables and constants from its surrounding context.
+
+var completionHandlersArray: [() -> Void] = []
+func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void)
+{
+    completionHandlersArray.append(completionHandler)
+}
+
+func someFunctionWithNonescapingClosure( closure: () -> Void) {   //@noescape won't be used in swift 3 anymore
+    closure()
+}
+
+class SomeClass {
+    var x = 10
+    func doSomething() {
+        someFunctionWithEscapingClosure { self.x = 100 } //needs to refer to self explicitly.
+        someFunctionWithNonescapingClosure { x = 200 }
+    }
+}
+
+let instance = SomeClass()
+instance.doSomething()
+print(instance.x)
+// Prints "200"
+
+completionHandlersArray.first?()        //https://oleb.net/blog/2016/10/optional-non-escaping-closures/
+
+print(instance.x)
+
+//Autoclosures
+
+var diffnames = ["yan", "yan2", "yan3"]
+
+print(diffnames.count)
+
+let provider = {diffnames.remove(at: 0)}
+
+print(diffnames.count)
+print(provider())
+
+print(diffnames.count)
+
+func serve(customParam provider: ()->String)
+{
+    print(provider())
+}
+
+serve(customParam: {diffnames.remove(at: 0)})
+
+
+func serve(customParam provider: @autoclosure ()->String)
+{
+    print(provider())
+}
+
+serve(customParam: {diffnames.remove(at: 0)})
+
+var custArr: [() -> String] = []
+
+func addProvToArr(_ myprovider: @autoclosure @escaping ()->String)      //should be changed to @escaping
+{
+    custArr.append(myprovider)
+}
+
+addProvToArr(diffnames.remove(at: 0))
+addProvToArr(diffnames.remove(at: 0))
+
+print (custArr.count)
+
+for myprovider in custArr {
+    print("Now serving \(myprovider)!")
+}
+
+
