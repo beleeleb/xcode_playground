@@ -1097,7 +1097,7 @@ print(instance.x)
 
 //Autoclosures
 
-var diffnames = ["yan", "yan2", "yan3"]
+var diffnames = ["yan", "yan2", "yan3", "yan4", "yan5"]
 
 print(diffnames.count)
 
@@ -1136,7 +1136,9 @@ addProvToArr(diffnames.remove(at: 0))
 print (custArr.count)
 
 for myprovider in custArr {
-    print("Now serving \(myprovider)!")
+    print("Now serving \(myprovider())!")
 }
 
+
+//Enums
 
